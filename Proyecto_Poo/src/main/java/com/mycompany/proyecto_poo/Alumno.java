@@ -16,7 +16,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Random;
-
+/**
+ * Esta clase srive para simular a un alumno
+ */
 /**
  *
  * @author emilio
@@ -32,11 +34,6 @@ public class Alumno {
     
     Nodo root = new Nodo(1, "1", 0, 0);
     PlanEstudios plan = new PlanEstudios(root);
-
-    public double getIndicadorEscolar() {
-        return indicadorEscolar;
-    }
-
     /**
      * Constructor vacío de la clase Alumno.
      */
@@ -48,7 +45,7 @@ public class Alumno {
         edad = 0;
         materiasPasadas = 0;
     }
-
+    
     /**
      * Constructor con atributos de la clase Alumno.
      *
@@ -212,6 +209,11 @@ public class Alumno {
         }
         return listaNombres.toArray(new String[0]);
     }
+    
+    public double getIndicadorEscolar() {
+        return indicadorEscolar;
+    }
+
 
     /**
      * Genera nombres aleatorios para el alumno basados en arreglos dados de nombres y apellidos.
@@ -223,7 +225,9 @@ public class Alumno {
         apellidoMaterno = apellidos[random.nextInt(apellidos.length)];
         domicilio = ubicaciones[random.nextInt(ubicaciones.length)];
     }
-    
+    /**
+     * Genera un numero aleatorio de 9 digitos
+     */
     public void generarNumeroCuenta(){
         Random random = new Random();
         numeroDeCuenta = "";
@@ -234,25 +238,39 @@ public class Alumno {
             numeroDeCuenta += num;
         }
     }
-    
+    /**
+     * Este metodo crea la edad y en base a esto crea el semestre
+     */
     public void generarEdadSemestre(){
         Random random = new Random();
-        int rint = random.nextInt(6) + 19;
-        if(rint<=25){
-            int dec = random.nextInt(1);
-            semestre = Math.abs(Math.abs((19-rint)*2) - dec);
-            if(semestre == 0) semestre = 1;
-            edad = rint;
-        }else{
+        int rint = random.nextInt(8) + 18;
+        if(rint>25){
+            edad = random.nextInt(25) + 26;
             semestre = 15;
-            edad = random.nextInt(50) + 25;
+        }else{
+            edad = rint;
+            semestre = edad-18 + random.nextInt(2) + 1;
         }
+        
     }
-   
+   /**
+    * Este metodo genera el indicador escolar
+    * @param alu El alumno al cual le vamos a crear el indicador escolar
+    * @param creditosNecesarios Los creditos que debe tener dependiendo del semestre
+    * @return regresa el indicador
+    */
     public double generarIndicadorEscolar(Alumno alu, Integer[] creditosNecesarios){
-        return ((alu.promedioAcumulado/alu.materiasCursadas)*(alu.materiasPasadas/alu.materiasCursadas)*100*(alu.creditos/creditosNecesarios[alu.semestre-1])*100);
+        return ((alu.promedioAcumulado/alu.materiasCursadas)*(alu.materiasPasadas*100/alu.materiasCursadas)*(alu.creditos*100/creditosNecesarios[alu.semestre-1]));
     }
-    
+    /**
+     * Crea a un alumno
+     * @param nombres los nombres al azar
+     * @param apellidos los apellidos al azar
+     * @param ubicaciones las ubicaciones al azar
+     * @param creditosNecesarios los creditas que necesita un alumno por semestre
+     * @param planMadre donde vamos a guardar nuestros datos estadisticos
+     * @return regresa al alumno
+     */
     public Alumno generarAlumno(String[] nombres, String[] apellidos, String[] ubicaciones, Integer[] creditosNecesarios, PlanEstudiosEstadisticos planMadre){
         Alumno alu = new Alumno();
         alu.generarNombresAleatoriosYUbicacion(nombres, apellidos, ubicaciones);
@@ -274,7 +292,11 @@ public class Alumno {
         System.out.println("Basado en los anteriores datos, su numero de IndicadorEscolar es: " + alu.indicadorEscolar);
         return alu;
     }
-    
+    /**
+     * Guarda un alumno en un csv
+     * @param alu el alumno a guardar
+     * @throws IOException 
+     */
     public void toCsv(Alumno alu) throws IOException{
         FileWriter fw = new FileWriter(nombre+"_"+apellidoPaterno+"_"+apellidoMaterno+".csv");
         BufferedWriter bw = new BufferedWriter(fw);
@@ -291,7 +313,7 @@ public class Alumno {
                 r = (Nodo)queue.poll();   
                 if(r.clave!=0&&r.calificacionActas!=0){
                     impresoraDeArchivos.println(r.nombre+","+r.clave+","+r.semestre+","+r.calificacionActas);
-                    System.out.println(r.nombre + "     " + r.calificacionActas);
+
                 }
                 for(int i = 0; i<r.sons.size(); i++){
                     if(r.calificacionActas!=0||r.clave==0){

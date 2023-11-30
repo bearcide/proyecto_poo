@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class Proyecto_Poo {
 
     public static void main(String[] args) throws IOException {
-        Integer creditosNecesarios[] = {46, 90, 136, 178, 220, 268, 314, 360, 404, 444, 484, 484, 484, 484, 484};
+        Integer creditosNecesarios[] = {46, 90, 136, 178, 220, 268, 314, 358, 398, 438, 438, 438, 438, 438, 438};
         NodoEstadistico rootMadre = new NodoEstadistico(1, "1", 0, 0);
         PlanEstudiosEstadisticos planMadre = new PlanEstudiosEstadisticos(rootMadre);
         planMadre.innit();
@@ -34,8 +34,8 @@ public class Proyecto_Poo {
         boolean run = true;
         while(run){
             System.out.println("1. Crear Alumnado");
-            System.out.println("2. Hacer cosas manuales");
-            System.out.println("3. Generar Num. Insc");
+            System.out.println("2. Hacer operaciones manuales");
+            System.out.println("3. Generar el Numero de Inscripcion");
             System.out.println("4. Buscar");
             System.out.println("5. Guardar");
             System.out.println("6. Cargar");
@@ -47,6 +47,7 @@ public class Proyecto_Poo {
                     System.out.println("Cual es el tamaño?");
                     inp2 = scan.nextInt();
                     alumnado.innit(inp2, nombres, apellidos, ubicaciones, creditosNecesarios, planMadre);
+                    System.out.println("Se creo al alumnado con exito.");
                 break;
 
                 case 2:
@@ -65,6 +66,7 @@ public class Proyecto_Poo {
                             alumnado.edit(alumnado);
                         break;
                     }
+                    System.out.println("La operacion se hizo");
                 break;
 
                 case 3:
@@ -77,7 +79,7 @@ public class Proyecto_Poo {
                     if(res == -1){
                         System.out.println("No se encontro");
                     }else{
-                        System.out.println("Si esta en el sistema"); ///Aqui hay que poner para que imprima mas mamada del wey
+                        System.out.println("Si esta en el sistema"); 
                     }
                 break;
 
@@ -97,16 +99,17 @@ public class Proyecto_Poo {
                             int pos = alumnado.buscar(alumnado);
                             alumnado.alumnado.get(pos).toCsv(alumnado.alumnado.get(pos));
                         break;
-
                     }
-
+                    System.out.println("Se guardaron los datos");
                 break;
 
                 case 6:
                     alumnado.fromCsv(planMadre);
+                    System.out.println("Se cargaron los archivos");
                 break;
 
                 case 7:
+                    System.out.println("Los alumnos guardados son: ");
                     alumnado.print();
                 break;
                 
@@ -115,7 +118,7 @@ public class Proyecto_Poo {
                 break;
 
                 default:
-                    System.out.println("Las placas de Barbosa son: 1974392");
+                    System.out.println("La opcion dada no es valida");
                 break;
             }
         }

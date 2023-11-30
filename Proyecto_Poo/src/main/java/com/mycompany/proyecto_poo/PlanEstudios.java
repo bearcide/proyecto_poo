@@ -13,8 +13,7 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 /**
- *
- * @author emilio
+ * Esta clase es para el plan de estudios
  */
 public class PlanEstudios {
     Nodo root;
@@ -22,7 +21,9 @@ public class PlanEstudios {
     public PlanEstudios(Nodo root) {
         this.root = root;
     }
-            
+    /**
+     * Inicializa el arbol
+     */
     public void innit(){
         ///////////////////// SEMESTRE 10 //////////////////////////////////////////////////////
         Nodo NOPT1 = new Nodo(10, "Primera Optativa", 9991, 8);
@@ -51,7 +52,7 @@ public class PlanEstudios {
         Nodo NOS76 = new Nodo(7, "Introduccion a la Economia", 1413, 8);
         ///////////////////// SEMESTRE 6 //////////////////////////////////////////////////////
         Nodo NOS61 = new Nodo(6, "Sistemas Operativos", 840, 8);
-        Nodo NOS62 = new Nodo(6, "Diseño Digital Moderno (L+)", 1645, 10); NOS62.add(NOS75);
+        Nodo NOS62 = new Nodo(6, "Diseño Digital Moderno (L+)", 1645, 10); NOS62.add(NOS72);
         Nodo NOS63 = new Nodo(6, "Bases de Datos (L+)", 1644, 14);
         Nodo NOS64 = new Nodo(6, "Circuitos Electronicos (L)", 1562, 8);
         Nodo NOS65 = new Nodo(6, "Administracion de Proyectos de Software", 1643, 8);
@@ -59,8 +60,8 @@ public class PlanEstudios {
         Nodo NOS51 = new Nodo(5, "Estructura y Programacion de Computadoras", 1503, 8); NOS51.add(NOS61);
         Nodo NOS52 = new Nodo(5, "Dispositivos Electronicos (L+)", 138, 10);
         Nodo NOS53 = new Nodo(5, "Lenguajes Formales y Automatas", 442, 8); NOS53.add(NOS73); NOS53.add(NOS74);
-        Nodo NOS54 = new Nodo(5, "Señales y Sistemas (L+)", 1473, 8); NOS54.add(NOS75);
-        Nodo NOS55 = new Nodo(5, "Ingenieria de Software", 1531, 8);
+        Nodo NOS54 = new Nodo(5, "Señales y Sistemas (L+)", 1473, 8); NOS54.add(NOS64); NOS54.add(NOS75);
+        Nodo NOS55 = new Nodo(5, "Ingenieria de Software", 1531, 8); NOS55.add(NOS65);
         ///////////////////// SEMESTRE 4 //////////////////////////////////////////////////////
         Nodo NOS41 = new Nodo(4, "Fundamentos de Estadistica", 1445, 8);
         Nodo NOS42 = new Nodo(4, "Electricidad y Magnetismo (L+)", 1414, 10); NOS42.add(NOS52);
@@ -110,7 +111,13 @@ public class PlanEstudios {
         S02.add(NOS24); S02.add(S03); 
         root.add(NOS11); root.add(NOS12); root.add(NOS13); root.add(NOS14); root.add(NOS15); root.add(NOS16); root.add(S02); 
     }        
-            
+    /**
+     * Crea el historial academico de un alumno
+     * @param alu el alumno al cual le va a crear el historial
+     * @param plan el arbol donde lo va a guardar
+     * @param planEST el arbol donde se guardan los datos estadisticos
+     * @return regresa el arbol 
+     */    
     public PlanEstudios breadthFrist(Alumno alu, PlanEstudios plan, PlanEstudiosEstadisticos planEST){
         Random rand = new Random();
 	Queue<Nodo> queue = new LinkedList();
@@ -151,7 +158,11 @@ public class PlanEstudios {
 	}
         return plan;
     }
-    
+    /**
+     * Busca un nodo 
+     * @param nombre el nombre contenido en el nodo
+     * @return regresa el nodo o null si no lo encontro
+     */
     public Nodo find(String nombre){
 	Queue<Nodo> queue = new LinkedList();
         Nodo r = root;
@@ -174,8 +185,12 @@ public class PlanEstudios {
         System.out.println("No se encontro " + r.nombre + " en el plan de estudios del alumno");
         return null;
     }
-        
-        
+       
+    /**
+     * Busca un nodo 
+     * @param clave la clave en el nodo
+     * @return regresa el nodo o null si no lo encuentra
+     */
     public Nodo find(Integer clave){
 	Queue<Nodo> queue = new LinkedList();
         Nodo r = root;
@@ -197,7 +212,11 @@ public class PlanEstudios {
         System.out.println("No se encontro " + r.nombre + " en el plan de estudios del alumno");
         return null;
     }
-    
+    /**
+     * Un menu para manejar los metodos de find
+     * @param plan el arbol donde va a buscar
+     * @return regresa el nodo
+     */
     public Nodo Buscar(PlanEstudios plan){
         Scanner scan = new Scanner(System.in);
         System.out.println("¿Quieres buscar la materia por 1.Nombre o por 2.clave?");
@@ -221,17 +240,32 @@ public class PlanEstudios {
         return nodo;
     }
     
+    /**
+     * Para modificar la calificacion
+     * @param alu el alumno donde se va a modificar
+     * @param nodo el nodo el cual se va a modificar
+     */
     public void edit(Alumno alu, Nodo nodo){
         Scanner scan = new Scanner(System.in);
         System.out.println("¿Cual seria la nueva calificacion para " + nodo.nombre + "?");
         int cal = scan.nextInt();
+        if(cal<5) cal = 5;
+        if(cal>10) cal = 10;
         
+        if(cal==5&&nodo.calificacionActas>5){
+            alu.materiasPasadas--;
+        } else if(cal>5&&nodo.calificacionActas==5){
+            alu.materiasPasadas++;
+        }
         alu.promedioAcumulado -= nodo.calificacionActas + cal;
         nodo.calificacionActas = cal;
         
         
     }
-    
+    /**
+     * Cambia el plan a una string
+     * @return regresa el string
+     */
     public String to_string(){
         Queue<Nodo> queue = new LinkedList();
         String path = "";
@@ -253,7 +287,12 @@ public class PlanEstudios {
 	}
         return path;
     }
-
+    /**
+     * Cambia una string a un plan
+     * @param alu el alumno donde se guardara los datos
+     * @param planEST donde se guardaran los datos estadisticos
+     * @param path la string
+     */
     public void from_string(Alumno alu, PlanEstudiosEstadisticos planEST, String path){
         StringTokenizer token = new StringTokenizer(path, ":");
         Queue<Nodo> queue = new LinkedList();
@@ -288,7 +327,13 @@ public class PlanEstudios {
             }
         }
     }
-    
+    /**
+     * Sirve para crear un plan manualmente
+     * @param alu el alumno donde se guardara el plan
+     * @param plan el plan donde se guardara
+     * @param planEST donde se guardaran los datos estadisticos
+     * @return regres el plan
+     */
     public PlanEstudios addPlanManual(Alumno alu, PlanEstudios plan, PlanEstudiosEstadisticos planEST){
         Scanner scan = new Scanner(System.in);
 	Queue<Nodo> queue = new LinkedList();
@@ -326,7 +371,9 @@ public class PlanEstudios {
 	}
         return plan;
     }
-    
+    /**
+     * Para imprimir los datos guardados en el plan
+     */
     public void print(){
     	Queue<Nodo> queue = new LinkedList();
         Nodo r = root;

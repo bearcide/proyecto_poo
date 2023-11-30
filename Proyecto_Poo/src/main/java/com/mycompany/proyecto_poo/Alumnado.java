@@ -28,7 +28,15 @@ public class Alumnado {
     public Alumnado() {
     }
 
-    
+    /**
+     * Metodo para generar n alumnos
+     * @param size el numero de alumnos
+     * @param nombres de donde se sacaran los nombres
+     * @param apellidos de donde se sacaran los apellidos
+     * @param ubicaciones de donde se sacaran las ubicaciones
+     * @param creditosNecesarios los creditos que se necesitan por semestre
+     * @param planMadre donde se guardaran los datos
+     */
     public void innit(int size, String nombres[], String apellidos[], String ubicaciones[], Integer creditosNecesarios[], PlanEstudiosEstadisticos planMadre) {
         Alumno alu = new Alumno();
         for(int i = 0; i<size; i++){
@@ -36,7 +44,10 @@ public class Alumnado {
             alumnado.add(alu);
         }
     }
-    
+    /**
+     * Para guardar los alumnados en un csv
+     * @throws IOException 
+     */
     public void to_csv() throws IOException{
         FileWriter fw = new FileWriter("alumnado.csv");
         BufferedWriter bw = new BufferedWriter(fw);
@@ -47,7 +58,12 @@ public class Alumnado {
         }
         impresoraDeArchivos.close();
     }
-    
+    /**
+     * Para cargar los datos de un csv
+     * @param planMadre donde se guardaran los datos estadisticos
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public void fromCsv(PlanEstudiosEstadisticos planMadre) throws FileNotFoundException, IOException{
             FileReader fr = new FileReader("alumnado.csv"); 
             BufferedReader br = new BufferedReader(fr);
@@ -72,12 +88,17 @@ public class Alumnado {
             }
             br.close();
     }
-    
+    /**
+     * Este metodo genera el numero de inscripcion. Este siendo el indice
+     */
     public void sortAlumnado(){
         alumnado.sort(Comparator.comparing(Alumno::getIndicadorEscolar).thenComparing(Alumno::getIndicadorEscolar));
         Collections.reverse(alumnado);
     }
-    
+    /**
+     * Añade un alumno manualmente
+     * @param planMadre donde se guardaran los datos estadisticos
+     */
     public void addAlumnoManual(PlanEstudiosEstadisticos planMadre){
         Scanner scan = new Scanner(System.in);
         Alumno alu = new Alumno();
@@ -105,7 +126,13 @@ public class Alumnado {
         alu.plan = alu.plan.addPlanManual(alu, alu.plan, planMadre);
         alumnado.add(alu);
     }
-    
+    /**
+     * Busca a un alumno
+     * @param nombre el nombre del alumno
+     * @param apellidoPaterno el apellido paterno del alumno
+     * @param apellidoMaterno el apellido meterno del alumno
+     * @return regresa el indice donde esta contenido
+     */
     public int buscarAlumnoNombre(String nombre, String apellidoPaterno, String apellidoMaterno){
         for(int i = 0; i<alumnado.size(); i++){
             if(nombre.equals(alumnado.get(i).getNombre()) && apellidoPaterno.equals(alumnado.get(i).getApellidoPaterno()) && apellidoMaterno.equals(alumnado.get(i).getApellidoMaterno()) ){
@@ -114,7 +141,11 @@ public class Alumnado {
         }
         return -1;
     }
-    
+    /**
+     * Busca un alumno
+     * @param cuenta el numero de cuenta del alumno
+     * @return el indice donde esta contenido
+     */
     public int buscarAlumnoCuenta(String cuenta){
         for(int i = 0; i<alumnado.size(); i++){
             if(cuenta.equals(alumnado.get(i).getNumeroDeCuenta())){
@@ -123,7 +154,11 @@ public class Alumnado {
         }
         return -1;
     }
-    
+    /**
+     * Un menu para buscar un alumno
+     * @param alumnado donde estan guardados los alumnos
+     * @return el indice donde esta contenido un alumno
+     */
     public int buscar(Alumnado alumnado){
         Scanner scan = new Scanner(System.in);
         System.out.println("¿Quieres encontrar al alumno por 1.Nombre o por 2.Numero de Cuenta?");
@@ -149,7 +184,10 @@ public class Alumnado {
         }
         return inpI;
     }
-    
+    /**
+     * Metodo para borrar un alumno
+     * @param alumnado donde estan contenidos los alumnos
+     */
     public void delete(Alumnado alumnado){
         int pos = buscar(alumnado);
         if(pos==-1){
@@ -159,7 +197,10 @@ public class Alumnado {
             System.out.println("El alumno se borro con exito");
         }
     }
-    
+    /**
+     * Menu para editar un alumno
+     * @param alumnado donde estan guardados los alumnos
+     */
     public void edit(Alumnado alumnado){
         int pos = buscar(alumnado);
         if(pos==-1){
@@ -226,7 +267,9 @@ public class Alumnado {
             }
         }
     }
-    
+    /**
+     * Para imprimir a los alumnos
+     */
     public void print(){
         for(int i = 0; i<alumnado.size(); i++){
             System.out.println("################# El alumno: " + alumnado.get(i).getNombre() + " " + alumnado.get(i).getApellidoPaterno() + " " + alumnado.get(i).getApellidoMaterno() + " ################");

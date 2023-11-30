@@ -10,8 +10,7 @@ import java.util.List;
 import java.util.Queue;
 
 /**
- *
- * @author emilio
+ * Nodo para el arbol
  */
 public class Nodo{
     Integer clave, creditos, semestre, calificacionActas=0;

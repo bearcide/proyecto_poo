@@ -12,8 +12,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- *
- * @author emilio
+ * Es una clase para guardar datos estadisticos de las materias
  */
 public class PlanEstudiosEstadisticos{
     
@@ -22,7 +21,9 @@ public class PlanEstudiosEstadisticos{
     public PlanEstudiosEstadisticos(NodoEstadistico root) {
         this.root = root;
     }
-    
+    /**
+     * Inicializa el arbol
+     */
     public void innit(){
         ///////////////////// SEMESTRE 10 //////////////////////////////////////////////////////
         NodoEstadistico NOPT1 = new NodoEstadistico(10, "Primera Optativa", 9991, 8);
@@ -51,7 +52,7 @@ public class PlanEstudiosEstadisticos{
         NodoEstadistico NOS76 = new NodoEstadistico(7, "Introduccion a la Economia", 1413, 8);
         ///////////////////// SEMESTRE 6 //////////////////////////////////////////////////////
         NodoEstadistico NOS61 = new NodoEstadistico(6, "Sistemas Operativos", 840, 8);
-        NodoEstadistico NOS62 = new NodoEstadistico(6, "Diseño Digital Moderno (L+)", 1645, 10); NOS62.add(NOS75);
+        NodoEstadistico NOS62 = new NodoEstadistico(6, "Diseño Digital Moderno (L+)", 1645, 10); NOS62.add(NOS72);
         NodoEstadistico NOS63 = new NodoEstadistico(6, "Bases de Datos (L+)", 1644, 14);
         NodoEstadistico NOS64 = new NodoEstadistico(6, "Circuitos Electronicos (L)", 1562, 8);
         NodoEstadistico NOS65 = new NodoEstadistico(6, "Administracion de Proyectos de Software", 1643, 8);
@@ -59,8 +60,8 @@ public class PlanEstudiosEstadisticos{
         NodoEstadistico NOS51 = new NodoEstadistico(5, "Estructura y Programacion de Computadoras", 1503, 8); NOS51.add(NOS61);
         NodoEstadistico NOS52 = new NodoEstadistico(5, "Dispositivos Electronicos (L+)", 138, 10);
         NodoEstadistico NOS53 = new NodoEstadistico(5, "Lenguajes Formales y Automatas", 442, 8); NOS53.add(NOS73); NOS53.add(NOS74);
-        NodoEstadistico NOS54 = new NodoEstadistico(5, "Señales y Sistemas (L+)", 1473, 8); NOS54.add(NOS75);
-        NodoEstadistico NOS55 = new NodoEstadistico(5, "Ingenieria de Software", 1531, 8);
+        NodoEstadistico NOS54 = new NodoEstadistico(5, "Señales y Sistemas (L+)", 1473, 8); NOS54.add(NOS64); NOS54.add(NOS75);
+        NodoEstadistico NOS55 = new NodoEstadistico(5, "Ingenieria de Software", 1531, 8); NOS55.add(NOS65);
         ///////////////////// SEMESTRE 4 //////////////////////////////////////////////////////
         NodoEstadistico NOS41 = new NodoEstadistico(4, "Fundamentos de Estadistica", 1445, 8);
         NodoEstadistico NOS42 = new NodoEstadistico(4, "Electricidad y Magnetismo (L+)", 1414, 10); NOS42.add(NOS52);
@@ -111,23 +112,11 @@ public class PlanEstudiosEstadisticos{
         root.add(NOS11); root.add(NOS12); root.add(NOS13); root.add(NOS14); root.add(NOS15); root.add(NOS16); root.add(S02); 
     }
     
-    public void testPEE(){
-        Queue<NodoEstadistico> queue = new LinkedList();
-        NodoEstadistico r = root;
-	if(r!=null){
-            queue.add(r);
-            while(!queue.isEmpty()){
-                r = (NodoEstadistico)queue.poll();  
-                if(r.alumnosInscritos!=0){
-                    System.out.println("La materia de " + r.nombre + " fue cursada por " + r.alumnosInscritos + " de los cuales " + r.alumnosPasados + " pasaron la materia. El promedio es " + r.promedioAcumulado/r.alumnosInscritos);
-                }
-                for(int i = 0; i<r.sons.size(); i++){
-                    queue.add(r.sons.get(i));    
-                    
-                }
-            }
-	}
-    }
+    /**
+     * Metodo para buscar en el arbol
+     * @param nombre el nombre de la materia
+     * @return regresa la materia
+     */
     
     public Nodo find(String nombre){
 	Queue<Nodo> queue = new LinkedList();
@@ -150,7 +139,13 @@ public class PlanEstudiosEstadisticos{
         System.out.println("No se encontro " + r.nombre + " en el plan de estudios");
         return null;
     }
-        
+      
+     /**
+     * Metodo para buscar en el arbol
+     * @param clave la clave de la materia
+     * @return regresa la materia
+     */
+    
     public Nodo find(Integer clave){
 	Queue<Nodo> queue = new LinkedList();
         Nodo r = root;
@@ -171,7 +166,10 @@ public class PlanEstudiosEstadisticos{
         System.out.println("No se encontro " + r.nombre + " en el plan de estudios");
         return null;
     }
-    
+    /**
+     * Para guardar los datos en un csv
+     * @throws IOException 
+     */
     public void toCsv() throws IOException{
         FileWriter fw = new FileWriter("EstadisticasDeMaterias.csv");
         BufferedWriter bw = new BufferedWriter(fw);

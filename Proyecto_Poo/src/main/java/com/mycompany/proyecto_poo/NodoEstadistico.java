@@ -8,11 +8,10 @@ import java.util.LinkedList;
  */
 
 /**
- *
- * @author emilio
+ * Metodo para los nodos en el arbol
  */
 public class NodoEstadistico extends Nodo{
-    Integer alumnosInscritos = 0, alumnosPasados = 0, promedioAcumulado = 0;
+    double alumnosInscritos = 0, alumnosPasados = 0, promedioAcumulado = 0;
     LinkedList<NodoEstadistico> sons = new LinkedList<>(); 
     
     public NodoEstadistico(Integer semestre, String nombre, Integer clave, Integer creditos) {
