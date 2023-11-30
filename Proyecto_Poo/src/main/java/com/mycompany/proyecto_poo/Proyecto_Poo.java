@@ -4,7 +4,11 @@
 
 package com.mycompany.proyecto_poo;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -14,21 +18,36 @@ import java.util.Scanner;
 public class Proyecto_Poo {
 
     public static void main(String[] args) throws IOException {
+        System.out.println("Bienvenido al sistema de Gestion Escolar");
         Integer creditosNecesarios[] = {46, 90, 136, 178, 220, 268, 314, 358, 398, 438, 438, 438, 438, 438, 438};
         NodoEstadistico rootMadre = new NodoEstadistico(1, "1", 0, 0);
         PlanEstudiosEstadisticos planMadre = new PlanEstudiosEstadisticos(rootMadre);
         planMadre.innit();
-        String nombres[] = {"Emilio", "Brayan", "Cris", "Alejandro", "Lalo", "Tota", "3333", "Pau", "ÑÑÑÑÑ"};
-        String apellidos[] = {"Garcia", "Montez", "Cristero", "aeoui", "Aleman", "Tromp", "ñoño", "Cabeza", "Bourbon"};
-        String ubicaciones[] = {"Coyoacan", "Tlalpan", "San Nicolas Totolapan"};
+        List<String> nombres = new ArrayList<String>();  
+        FileReader fr = new FileReader("Nombres.csv"); 
+        BufferedReader br = new BufferedReader(fr);
+        String linea = br.readLine();
+        while(linea!=null){
+            nombres.add(linea);
+            linea = br.readLine();
+        }
+        List<String> apellidos = new ArrayList<String>();  
+        fr = new FileReader("Apellidos.csv"); 
+        br = new BufferedReader(fr);
+        linea = br.readLine();
+        while(linea!=null){
+            apellidos.add(linea);
+            linea = br.readLine();
+        }
+        List<String> ubicaciones = new ArrayList<String>();  
+        fr = new FileReader("Lugares.csv"); 
+        br = new BufferedReader(fr);
+        linea = br.readLine();
+        while(linea!=null){
+            ubicaciones.add(linea);
+            linea = br.readLine();
+        }
         Alumnado alumnado = new Alumnado();
-        //alumnado.innit(100, nombres, apellidos, ubicaciones, creditosNecesarios, planMadre);
-        //alumnado.sortAlumnado();
-        //alumnado.to_csv();
-        //alumnado.fromCsv(planMadre);
-        //alumnado.test(100);
-        //alumnado.sort(Comparator.comparing(Alumno::getIndicadorEscolar).thenComparing(Alumno::getIndicadorEscolar));
-        //Collections.reverse(alumnado);
         Scanner scan = new Scanner(System.in);
         
         boolean run = true;

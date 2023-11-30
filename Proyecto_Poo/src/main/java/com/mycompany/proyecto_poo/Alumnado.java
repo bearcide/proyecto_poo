@@ -19,8 +19,7 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 /**
- *
- * @author emilio
+ * Clase para guardar a todos los alumnos
  */
 public class Alumnado {
     List<Alumno> alumnado = new ArrayList<Alumno>();  
@@ -37,7 +36,7 @@ public class Alumnado {
      * @param creditosNecesarios los creditos que se necesitan por semestre
      * @param planMadre donde se guardaran los datos
      */
-    public void innit(int size, String nombres[], String apellidos[], String ubicaciones[], Integer creditosNecesarios[], PlanEstudiosEstadisticos planMadre) {
+    public void innit(int size, List<String> nombres, List<String> apellidos, List<String> ubicaciones, Integer creditosNecesarios[], PlanEstudiosEstadisticos planMadre) {
         Alumno alu = new Alumno();
         for(int i = 0; i<size; i++){
             alu = alu.generarAlumno(nombres, apellidos, ubicaciones, creditosNecesarios, planMadre);

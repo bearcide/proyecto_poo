@@ -19,10 +19,6 @@ import java.util.Random;
 /**
  * Esta clase srive para simular a un alumno
  */
-/**
- *
- * @author emilio
- */
 public class Alumno {
     private String nombre;
     private String apellidoPaterno;
@@ -218,12 +214,12 @@ public class Alumno {
     /**
      * Genera nombres aleatorios para el alumno basados en arreglos dados de nombres y apellidos.
      */
-    public void generarNombresAleatoriosYUbicacion(String[] nombres,String[] apellidos,String[] ubicaciones) {
+    public void generarNombresAleatoriosYUbicacion(List<String> nombres,List<String> apellidos,List<String> ubicaciones) {
         Random random = new Random();
-        nombre = nombres[random.nextInt(nombres.length)];
-        apellidoPaterno = apellidos[random.nextInt(apellidos.length)];
-        apellidoMaterno = apellidos[random.nextInt(apellidos.length)];
-        domicilio = ubicaciones[random.nextInt(ubicaciones.length)];
+        nombre = nombres.get(random.nextInt(nombres.size()));
+        apellidoPaterno = apellidos.get(random.nextInt(apellidos.size()));
+        apellidoMaterno = apellidos.get(random.nextInt(apellidos.size()));
+        domicilio = ubicaciones.get(random.nextInt(ubicaciones.size()));
     }
     /**
      * Genera un numero aleatorio de 9 digitos
@@ -271,7 +267,7 @@ public class Alumno {
      * @param planMadre donde vamos a guardar nuestros datos estadisticos
      * @return regresa al alumno
      */
-    public Alumno generarAlumno(String[] nombres, String[] apellidos, String[] ubicaciones, Integer[] creditosNecesarios, PlanEstudiosEstadisticos planMadre){
+    public Alumno generarAlumno(List<String> nombres, List<String> apellidos, List<String> ubicaciones, Integer[] creditosNecesarios, PlanEstudiosEstadisticos planMadre){
         Alumno alu = new Alumno();
         alu.generarNombresAleatoriosYUbicacion(nombres, apellidos, ubicaciones);
         System.out.println("################# Generando al alumno: " + alu.nombre + " " + alu.apellidoPaterno + " " + alu.apellidoMaterno + " ################");
